@@ -57,16 +57,22 @@ document.getElementById("next").addEventListener("click", goToNextImg);
 document.getElementById("prev").addEventListener("click", goToPrevImg);
 
 //add an event by clicking on a preview for showing the big img
-activeElementOnClick(carouselBottom);
+activeElementOnClick(carouselBottom, carouselTopContainer);
 
 //add a timer for let the carousel going
 const nextTimer = setInterval(goToNextImg, 3000);
 
 // add a reverse timer when clicking on reverse button
 let isTimerBackwardGoing = false
+let prevTimer;
 document.getElementById("reverse-btn").addEventListener("click", stopForwardTimerAndStartBackwardTimer);
 
 //add a stop timer when clicking on the button
+document.getElementById("stop-btn").addEventListener("click", function(){
+    clearInterval(nextTimer);
+    clearInterval(prevTimer)
+    isTimerBackwardGoing = false;
+})
 
 
 
@@ -138,16 +144,19 @@ function goToNextImg(){
 /**
  * Description: change the active element by clicking on them
  * @param {array} array with element to show by clicking
+ * @param {array} firstElement the big img
+ * @param {array} secondElement the preview img
+ * @param {number} index the number of the index
  */
-function activeElementOnClick(array){
+ function activeElementOnClick(array, element,){
     for (let i = 0; i < array.length; i++) {
         const thisElement = array[i];
         thisElement.addEventListener("click", function(){
-            carouselTopContainer[index].classList.remove("active");
-            carouselBottom[index].classList.remove("active")
+            element[index].classList.remove("active");
+            array[index].classList.remove("active")
             index = i
-            carouselTopContainer[index].classList.add("active")
-            carouselBottom[index].classList.add("active")
+            element[index].classList.add("active")
+            array[index].classList.add("active")
         })
     }
 }
@@ -161,7 +170,7 @@ function stopForwardTimerAndStartBackwardTimer (){
     clearInterval(nextTimer);
     
     if(!isTimerBackwardGoing){
-        const prevTimer = setInterval(function(){
+        prevTimer = setInterval(function(){
             goToPrevImg()
         },  3000)
         isTimerBackwardGoing = true;
