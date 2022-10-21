@@ -32,8 +32,20 @@ let elementCreatedString = ""
 images.forEach((item)=> elementCreatedString += getStringElement(item));
 
 // add the string with element in the DOM
-topContainer.innerHTML = elementCreatedString
+topContainer.innerHTML += elementCreatedString;
 
+//exctract the created elements and make the first one visible
+const carouselTopContainer = document.getElementsByClassName("carousel-top-img");
+carouselTopContainer[0].classList.add("active");
+
+// declare a variable for knowing the index of carouselTopContainer and moving in it
+let index = 0;
+
+//add an event by next for move the images
+document.getElementById("next").addEventListener("click", goToNextImg);
+
+//add an event by next for move the images
+document.getElementById("prev").addEventListener("click", goToPrevImg);
 
 
 
@@ -55,4 +67,19 @@ function getStringElement(object){
         </div>
     `
     return stringElement
+}
+
+/* UI FUNCTIONS */
+/**
+ * Description: a function that change images forward by pressing a button
+ */
+function goToNextImg(){
+    carouselTopContainer[index].classList.remove("active");
+    if(index < images.length - 1){
+        index++
+    } else{
+        index = 0 
+    }
+    carouselTopContainer[index].classList.add("active")
+    console.log(index);
 }

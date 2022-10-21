@@ -63,3 +63,7 @@ button{
 #next{
     right: 10px;
 }
+
+.active{
+    display: block;
+}
