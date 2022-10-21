@@ -81,5 +81,18 @@ function goToNextImg(){
         index = 0 
     }
     carouselTopContainer[index].classList.add("active")
-    console.log(index);
+}
+
+
+/**
+ * Description: a function that change images backward by pressing a button
+ */
+ function goToPrevImg(){
+    carouselTopContainer[index].classList.remove("active");
+    if(index > 0){
+        index --
+    } else {
+        index = images.length -1 
+    }
+    carouselTopContainer[index].classList.add("active")
 }
