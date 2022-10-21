@@ -60,7 +60,13 @@ document.getElementById("prev").addEventListener("click", goToPrevImg);
 activeElementOnClick(carouselBottom);
 
 //add a timer for let the carousel going
-setInterval(goToNextImg, 1000)
+const nextTimer = setInterval(goToNextImg, 3000);
+
+// add a reverse timer when clicking on reverse button
+let isTimerBackwardGoing = false
+document.getElementById("reverse-btn").addEventListener("click", stopForwardTimerAndStartBackwardTimer);
+
+//add a stop timer when clicking on the button
 
 
 
@@ -143,5 +149,21 @@ function activeElementOnClick(array){
             carouselTopContainer[index].classList.add("active")
             carouselBottom[index].classList.add("active")
         })
+    }
+}
+
+/**
+ * Description: stop the forward timer and start the backward timer 
+ * @returns {any}
+ */
+function stopForwardTimerAndStartBackwardTimer (){
+
+    clearInterval(nextTimer);
+    
+    if(!isTimerBackwardGoing){
+        const prevTimer = setInterval(function(){
+            goToPrevImg()
+        },  3000)
+        isTimerBackwardGoing = true;
     }
 }
