@@ -25,27 +25,38 @@ const images = [
 
 //export elements From DOM
 const topContainer = document.querySelector(".carousel-top")
+const bottomContainer = document.querySelector(".carousel-bottom")
 
 //read all index in the array and create a div element with the img and info inside
-let elementCreatedString = ""
+let elementCreatedStringTop = ""
+let elementCreatedStringBottom =""
 
-images.forEach((item)=> elementCreatedString += getStringElement(item));
+images.forEach((item)=>{
+    elementCreatedStringTop += getStringElement(item);
+    elementCreatedStringBottom += getStringOnlyImgElement(item)
+});
 
 // add the string with element in the DOM
-topContainer.innerHTML += elementCreatedString;
+topContainer.innerHTML = elementCreatedStringTop;
+bottomContainer.innerHTML = elementCreatedStringBottom;
 
 //exctract the created elements and make the first one visible
 const carouselTopContainer = document.getElementsByClassName("carousel-top-img");
-carouselTopContainer[0].classList.add("active");
+const carouselBottom = document.querySelectorAll(".carousel-bottom img")
 
-// declare a variable for knowing the index of carouselTopContainer and moving in it
+
+// declare a variable for knowing the index of carouselTopContainer and moving in it and make active the first one
 let index = 0;
+carouselTopContainer[index].classList.add("active");
+carouselBottom[index].classList.add("active")
 
 //add an event by next for move the images
 document.getElementById("next").addEventListener("click", goToNextImg);
 
 //add an event by next for move the images
 document.getElementById("prev").addEventListener("click", goToPrevImg);
+
+activeElementOnClick(carouselBottom);
 
 
 
@@ -69,18 +80,32 @@ function getStringElement(object){
     return stringElement
 }
 
+/**
+ * Description: function that give a string with dinamic Img HTML element based on an object
+ * @param {object} object 
+ * @returns {string} string HTML layout
+ */
+function getStringOnlyImgElement(object){
+    const imgStringElement =`
+        <img src="${object.image}" alt="Copertina di ${object.title}">
+    `
+    return imgStringElement
+}
+
 /* UI FUNCTIONS */
 /**
  * Description: a function that change images forward by pressing a button
  */
 function goToNextImg(){
     carouselTopContainer[index].classList.remove("active");
+    carouselBottom[index].classList.remove("active")
     if(index < images.length - 1){
         index++
     } else{
         index = 0 
     }
     carouselTopContainer[index].classList.add("active")
+    carouselBottom[index].classList.add("active")
 }
 
 
@@ -89,10 +114,30 @@ function goToNextImg(){
  */
  function goToPrevImg(){
     carouselTopContainer[index].classList.remove("active");
+    carouselBottom[index].classList.remove("active")
     if(index > 0){
         index --
     } else {
         index = images.length -1 
     }
     carouselTopContainer[index].classList.add("active")
+    carouselBottom[index].classList.add("active")
+}
+
+
+/**
+ * Description: change the active element by clicking on them
+ * @param {array} array with element to show by clicking
+ */
+function activeElementOnClick(array){
+    for (let i = 0; i < array.length; i++) {
+        const thisElement = array[i];
+        thisElement.addEventListener("click", function(){
+            carouselTopContainer[index].classList.remove("active");
+            carouselBottom[index].classList.remove("active")
+            index = i
+            carouselTopContainer[index].classList.add("active")
+            carouselBottom[index].classList.add("active")
+        })
+    }
 }
