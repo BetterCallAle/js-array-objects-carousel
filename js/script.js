@@ -56,7 +56,11 @@ document.getElementById("next").addEventListener("click", goToNextImg);
 //add an event by next for move the images
 document.getElementById("prev").addEventListener("click", goToPrevImg);
 
+//add an event by clicking on a preview for showing the big img
 activeElementOnClick(carouselBottom);
+
+//add a timer for let the carousel going
+setInterval(goToNextImg, 1000)
 
 
 
