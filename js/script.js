@@ -68,11 +68,9 @@ let prevTimer;
 document.getElementById("reverse-btn").addEventListener("click", stopForwardTimerAndStartBackwardTimer);
 
 //add a stop timer when clicking on the button
-document.getElementById("stop-btn").addEventListener("click", function(){
-    clearInterval(nextTimer);
-    clearInterval(prevTimer)
-    isTimerBackwardGoing = false;
-})
+document.getElementById("stop-btn").addEventListener("click", stopTimer);
+ 
+
 
 
 
@@ -144,9 +142,7 @@ function goToNextImg(){
 /**
  * Description: change the active element by clicking on them
  * @param {array} array with element to show by clicking
- * @param {array} firstElement the big img
- * @param {array} secondElement the preview img
- * @param {number} index the number of the index
+ * @param {array} element the big img
  */
  function activeElementOnClick(array, element,){
     for (let i = 0; i < array.length; i++) {
@@ -175,4 +171,14 @@ function stopForwardTimerAndStartBackwardTimer (){
         },  3000)
         isTimerBackwardGoing = true;
     }
+}
+
+
+/**
+ * Description: stop the timer
+ */
+function stopTimer(){
+    clearInterval(nextTimer);
+    clearInterval(prevTimer)
+    isTimerBackwardGoing = false;
 }
