@@ -44,23 +44,22 @@ bottomContainer.innerHTML = elementCreatedStringBottom;
 const carouselTopContainer = document.getElementsByClassName("carousel-top-img");
 const carouselBottom = document.querySelectorAll(".carousel-bottom img")
 
-
 // declare a variable for knowing the index of carouselTopContainer and moving in it and make active the first one
 let index = 0;
 carouselTopContainer[index].classList.add("active");
 carouselBottom[index].classList.add("active")
 
-//add an event by next for move the images
+//add an event when clicking prev for move the images
 document.getElementById("next").addEventListener("click", goToNextImg);
 
-//add an event by next for move the images
+//add an event when clicking prev for move the images
 document.getElementById("prev").addEventListener("click", goToPrevImg);
 
 //add an event by clicking on a preview for showing the big img
 activeElementOnClick(carouselBottom, carouselTopContainer);
 
 //add a timer for let the carousel going
-const nextTimer = setInterval(goToNextImg, 3000);
+let nextTimer = setInterval(goToNextImg, 3000);
 
 // add a reverse timer when clicking on reverse button
 let isTimerBackwardGoing = false
@@ -178,7 +177,15 @@ function stopForwardTimerAndStartBackwardTimer (){
  * Description: stop the timer
  */
 function stopTimer(){
-    clearInterval(nextTimer);
+
+    if(nextTimer){
+        clearInterval(nextTimer);
+        nextTimer = null
+    } else{
+        nextTimer = setInterval(goToNextImg, 3000)
+        console.log(nextTimer);
+    }
+
     clearInterval(prevTimer)
     isTimerBackwardGoing = false;
 }
